@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, abort
 import os
 import psycopg2
 
@@ -10,17 +10,24 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def main():
-    cur = conn.cursor()
-    cur.execute("""CREATE TABLE EVENTS
-        (ID INT PRIMARY KEY NOT NULL,
-        EVENT TEXT NOT NULL);
-        """)
-    conn.commit()
     return("<h1>Hi there</h1>")
 
 @app.route("/page", methods=["GET"])
 def page():
     return render_template("index.html")
+
+
+@app.route("/event/<eventName>")
+def event():
+    if eventName in ["one", "two", "three", "four", "five", "six", "seven", "pyraminx", "megaminx", "square1", "bld"]:
+        return render_template("event.html", event=eventName)
+    else:
+        abort(404)
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html")
 
 
 if __name__=="__main__":
