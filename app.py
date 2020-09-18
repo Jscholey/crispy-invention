@@ -15,6 +15,7 @@ def main():
         (ID INT PRIMARY KEY NOT NULL,
         EVENT TEXT NOT NULL);
         """)
+    conn.commit()
     return("<h1>Hi there</h1>")
 
 @app.route("/page", methods=["GET"])
