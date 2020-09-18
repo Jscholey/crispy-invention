@@ -8,7 +8,7 @@ def main():
 
 @app.route("/page", methods=["GET"])
 def page():
-    return("<h2>this is a page</h2>")
+    return render_template("index.html")
 
 
 if __name__=="__main__":
