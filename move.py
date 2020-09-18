@@ -22,7 +22,7 @@ class Move:
 		elif self.modifier == 3:
 			concat = "'"
 		else:
-			return None
+			return "ERR"
 		return self.face + concat
 
 	def faceopposite(self):
