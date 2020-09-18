@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cube Competition - {% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="wrapper">
+
+    <div id="header">
+        <h1>Cube Competition</h1>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="#">Events</a></li>
+                <li><a href="#">Times</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+    </div>
+
+
+    <div id="content">
+        <h2>{{ self.title() }}</h2>
+        {% block content %}{% endblock %}
+    </div>
+
+
+    <div id="footer">
+        <p>Footer text and stuff on every page</p>
+    </div>
+
+</div>
+</body>
+</html>
