@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request, abort
 import os
 import psycopg2
-
+'''
 DATABASE_URL = os.environ["DATABASE_URL"]
 
 conn = psycopg2.connect(DATABASE_URL, sslmode="require")
-
+'''
 app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
@@ -18,7 +18,7 @@ def page():
 
 
 @app.route("/event/<eventName>")
-def event():
+def event(eventName):
     if eventName in ["one", "two", "three", "four", "five", "six", "seven", "pyraminx", "megaminx", "square1", "bld"]:
         return render_template("event.html", event=eventName)
     else:
