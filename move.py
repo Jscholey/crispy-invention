@@ -1,7 +1,8 @@
 class Move:
+	faces = "UDLRFB"
 
 	def __init__(self, face, modifier):
-		if face in "UDLRFB" and type(modifier) is int:
+		if face in Move.faces and type(modifier) is int:
 			if modifier == 0:
 				self.face = None
 			else:
@@ -28,7 +29,7 @@ class Move:
 		return Move.opposite(self.face)
 
 	@classmethod
-	def opposite(self, face):
+	def opposite(cls, face):
 		if face == "L":
 			return "R"
 		elif face == "R":
@@ -45,10 +46,8 @@ class Move:
 			return None
 
 	@classmethod
-	def cancel(self, move1, move2):
+	def cancel(cls, move1, move2):
 		if move1.face == move2.face:
 			return Move(move1.face, move1.modifier + move2.modifier)
 		else:
 			return Move(None, None)
-
-print(Move.cancel(Move("U", 3), Move("U", 2)).name())
