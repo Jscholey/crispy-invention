@@ -56,7 +56,9 @@ def event():
                 rows = cur.fetchall()
                 events = []
                 for row in rows:
-                    events.append(row[1])
+                    out = {"event": row[1],
+                           "display": get_display_name(row[1])}
+                    events.append(out)
             except:
                 abort(404)
 
