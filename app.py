@@ -14,6 +14,10 @@ app = Flask(__name__)
 def main():
     return render_template("index.html")
 
+@app.route("/about", methods=["GET"])
+def about():
+    return render_template("about.html")
+
 
 def get_display_name(event):
     names = {"three": "3x3",
