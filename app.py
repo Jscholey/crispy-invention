@@ -4,8 +4,6 @@ import psycopg2
 
 
 DATABASE_URL = os.environ["DATABASE_URL"]
-conn = psycopg2.connect(DATABASE_URL, sslmode="require")
-
 
 app = Flask(__name__)
 
@@ -48,8 +46,9 @@ def get_display_name(event):
 def event():
     if request.method == "GET":
 
-        cur = conn.cursor()
+        conn = psycopg2.connect(DATABASE_URL, sslmode="require")
         try:
+            cur = conn.cursor()
             cur.execute("""
                 Select * from events;
                 """)
@@ -63,6 +62,8 @@ def event():
                 eventsList.append(row[1])
         except:
             abort(404)
+        conn.close()
+
 
         data = request.args
         if "event" in data:
@@ -79,7 +80,28 @@ def event():
                 panel = "timer"
                 leaderboard = False
 
-            return render_template("eventTemplate.html", allEvents=events, event=event, panel=panel, leaderboard=leaderboard)
+
+            if leaderboard:
+                conn = psycopg2.connect(DATABASE_URL, sslmode="require")
+                try:
+                    cur = conn.cursor()
+                    cur.execute("""
+                        Select * from events where "eventName"=%s
+                        """, [event])
+                    e = cur.fetchone()
+                    cur.execute("""
+                        Select * from times where "EventId"=%s
+                        """,
+                        [e[0]])
+                    times = cur.fetchall()
+                except:
+                    abort(404)
+                conn.close()
+
+                return render_template("eventTemplate.html", allEvents=events, event=event, panel=panel, leaderboard=leaderboard)
+
+            else:
+                return render_template("eventTemplate.html", allEvents=events, event=event, panel=panel, leaderboard=leaderboard)
             #
             # Show relevant filled template based on event and panel
             #
