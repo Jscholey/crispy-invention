@@ -4,11 +4,9 @@
 
 {% block content %}
     <div>
-        <div><a href="/event?event=three&panel={{panel}}">3x3</a></div>
-        <div><a href="/event?event=four&panel={{panel}}">4x4</a></div>
-        <div><a href="/event?event=five&panel={{panel}}">5x5</a></div>
-        <div><a href="/event?event=six&panel={{panel}}">6x6</a></div>
-        <!-- maybe have this dynamically created from db -->
+    {% for ev in allEvents %}
+        <div><a href="/event?event={{ev['event']}}&panel={{panel}}">{{ev['display']}}</a></div>
+    {% endfor %}
     </div>
 
     <div>

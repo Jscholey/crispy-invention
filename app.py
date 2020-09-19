@@ -28,8 +28,6 @@ def event(eventName):
 """
 
 def get_display_name(event):
-    return "fancy name"
-"""
     names = {"three": "3x3",
              "two": "2x2",
              "four": "4x4",
@@ -43,7 +41,7 @@ def get_display_name(event):
         out = names[event]
     except:
         out = event
-"""
+    return out
 
 
 @app.route("/event", methods=["GET", "POST"])
@@ -57,22 +55,21 @@ def event():
                 """)
             rows = cur.fetchall()
             events = []
+            eventsList = []
             for row in rows:
                 out = {"event": row[1],
                        "display": get_display_name(row[1])}
                 events.append(out)
+                eventsList.append(row[1])
         except:
             abort(404)
-        test = events
-
-        events = ["three", "four"]
 
         data = request.args
         if "event" in data:
             event = data["event"]
 
             # Check if event exists in database
-            if event not in events:
+            if event not in eventsList:
                 return redirect("/event")
             # if not, redirect to GET event without request args
             
@@ -82,7 +79,7 @@ def event():
                 panel = "timer"
                 leaderboard = False
 
-            return render_template("eventTemplate.html", allEvents=events, event=test, panel=panel, leaderboard=leaderboard)
+            return render_template("eventTemplate.html", allEvents=events, event=event, panel=panel, leaderboard=leaderboard)
             #
             # Show relevant filled template based on event and panel
             #
