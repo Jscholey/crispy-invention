@@ -28,6 +28,7 @@ def event(eventName):
 """
 
 def get_display_name(event):
+    return "fancy name"
 """
     names = {"three": "3x3",
              "two": "2x2",
@@ -42,8 +43,7 @@ def get_display_name(event):
         out = names[event]
     except:
         out = event
-        """
-    return "fancy name"
+"""
 
 
 @app.route("/event", methods=["GET", "POST"])
@@ -64,6 +64,7 @@ def event():
             except:
                 abort(404)
         test = events
+
         events = ["three", "four"]
 
         data = request.args
