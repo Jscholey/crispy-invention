@@ -3,9 +3,9 @@
 {% block title %}Events{% endblock %}
 
 {% block content %}
-    <div>
+    <div class="row">
     {% for ev in allEvents %}
-        <div><a href="/event?event={{ev['event']}}">{{ev['display']}}</a></div>
+        <div class="col"><a href="/event?event={{ev['event']}}">{{ev['display']}}</a></div>
     {% endfor %}
     </div>
 {% endblock %}

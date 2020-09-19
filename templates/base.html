@@ -2,21 +2,19 @@
 <html>
 <head>
     <title>Cube Competition - {% block title %}{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     {% block head %}{% endblock %}
 </head>
 <body>
-<div id="wrapper">
+<div class="container">
 
-    <div id="header">
-        <h1>Cube Competition</h1>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="#">Events</a></li>
-                <li><a href="#">Times</a></li>
-                <li><a href="#">About</a></li>
-            </ul>
+    <div class="row justify-content-start">
+        <div class="col-sm-2"><a href="/">Home</a></div>
+        <div class="col-sm-2"><a href="/event">Events</a></div>
+        <div class="col-sm-2"><a href="#">About</a></div>
     </div>
+    <h1>Cube Competition</h1>
 
 
     <div id="content">
