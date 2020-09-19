@@ -1,8 +1,17 @@
 {% extends "eventTemplate.html" %}
 
+{% block head %}<script src="{{ url_for('static', filename='event.js') }}"></script>{% endblock %}
+
 {% block panel %}
 
+	<h3>Timer (Spacebar to start/stop)</h3>
+
+	<h5 id="time">0.00</h5>
+
+	<input id="engage" type="button" value="Press to use timer" onclick="useTimer();">
+
     <h3>Times</h3>
+
     <p>enter your time</p>
 
     <form action="/event" method="post">
