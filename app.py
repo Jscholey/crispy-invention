@@ -145,7 +145,7 @@ def event():
                 return redirect(url)
 
             t = str(time)
-            if time <= 0 or "." not in t or name=="":
+            if time <= 0 or "." not in t or name.strip()=="":
                 valid = False
 
             if valid:
@@ -161,7 +161,7 @@ def event():
                     cur.execute("""
                         Insert into times ("EventId", username, time, "dateTime") values
                         (%s, %s, %s, %s);
-                        """, [eventId, name, time, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
+                        """, [eventId, name.strip(), time, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
                     conn.commit()
                 except:
                     conn.close()
