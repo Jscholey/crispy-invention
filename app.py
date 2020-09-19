@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, abort, redirect
+from flask import Flask, render_template, request, abort, redirect, url_for
 import os
 import psycopg2
 import datetime
@@ -10,10 +10,6 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def main():
-    return("<h1>Hi there</h1>")
-
-@app.route("/page", methods=["GET"])
-def page():
     return render_template("index.html")
 
 
