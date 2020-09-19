@@ -1,17 +1,24 @@
-var time = 0;
-var timeStr = "0.00";
+var time;
+var timeStr;
 
 var loop;
 
-var running = false;
+var running;
 
 var usingTimer = false;
 
 function useTimer() {
 	usingTimer = !usingTimer;
 	if (usingTimer) {
+		time = 0;
+		timeStr = "0.00";
+		running = false;
+		document.getElementById("help").innerHTML = "Spacebar to start/stop";
+		document.getElementById("time").innerHTML = "0.00";
 		document.getElementById("engage").value = "Press if not using timer";
 	} else {
+		document.getElementById("help").innerHTML = "";
+		document.getElementById("time").innerHTML = "";
 		document.getElementById("engage").value = "Press to use timer";
 	}
 }
