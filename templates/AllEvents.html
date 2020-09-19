@@ -5,7 +5,7 @@
 {% block content %}
     <div>
     {% for ev in allEvents %}
-        <div><a href="/event?event={{ev['event']}}">{{ev['display']}}</a></div>
+        <div><a href="/event?event={{ev}}">{{ev}}</a></div>
     {% endfor %}
     </div>
 
