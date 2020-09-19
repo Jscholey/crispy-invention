@@ -188,6 +188,7 @@ def event():
             url = "/event?event=%s&panel=timer" % event
             return redirect(url)
 
+# TODO add a failed to connect to db page
 
 @app.errorhandler(404)
 def page_not_found(e):
