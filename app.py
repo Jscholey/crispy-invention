@@ -133,7 +133,7 @@ def event():
                 valid = False
 
             t = str(time)
-            if time <= 0 or "." not in t or int(t.split(".")[1][0]) > 5:
+            if time <= 0 or "." not in t or name=="":
                 valid = False
 
             if valid:
