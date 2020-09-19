@@ -130,7 +130,8 @@ def event():
                 name = request.form['name']
                 time = float(request.form['time'])
             except:
-                valid = False
+                url = "/event?event=%s&panel=timer&input=bad" % event
+                return redirect(url)
 
             t = str(time)
             if time <= 0 or "." not in t or name=="":
