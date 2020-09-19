@@ -24,7 +24,8 @@ def get_display_name(event):
              "seven": "7x7",
              "megaminx": "Megaminx",
              "pyraminx": "Pyraminx",
-             "square1": "Square-1"}
+             "square1": "Square-1",
+             "skewb": "Skewb"}
     try:
         out = names[event]
     except:
