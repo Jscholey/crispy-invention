@@ -4,6 +4,12 @@
 
 {% block content %}
     <div>
+    {% for ev in allEvents %}
+        <div><a href="/event?event={{ev}}">{{get_display_name(ev)}}</a></div>
+    {% endfor %}
+    </div>
+
+    <div>
         <div><a href=/event?event=three>3x3</a></div>
         <div><a href=/event?event=four>4x4</a></div>
         <div><a href=/event?event=five>5x5</a></div>

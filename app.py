@@ -27,15 +27,28 @@ def event(eventName):
         abort(404)
 """
 
+def get_display_name(event):
+    names = {"three": "3x3",
+             "two": "2x2",
+             "four": "4x4",
+             "five": "5x5",
+             "six": "6x6",
+             "seven": "7x7",
+             "megaminx": "Megaminx",
+             "pyraminx": "Pyraminx",
+             "square1": "Square-1"}
+    try:
+        out = names[event]
+    except:
+        out = event
+    return out
+
 
 @app.route("/event", methods=["GET", "POST"])
 def event():
     if request.method == "GET":
-        data = request.args
-        if "event" in data:
-            event = data["event"]
-            
-            cur = conn.cursor()
+
+        cur = conn.cursor()
             try:
                 cur.execute("""
                     Select * from events;
@@ -47,12 +60,14 @@ def event():
             except:
                 abort(404)
 
-            #
-            # TODO check if event exists in database
+        data = request.args
+        if "event" in data:
+            event = data["event"]
+
+            # Check if event exists in database
             if event not in events:
                 return redirect("/event")
             # if not, redirect to GET event without request args
-            #
             
             panel = "leaderboard"
             leaderboard = True
@@ -60,12 +75,12 @@ def event():
                 panel = "timer"
                 leaderboard = False
 
-            return render_template("eventTemplate.html", event=events, panel=panel, leaderboard=leaderboard)
+            return render_template("eventTemplate.html", allEvents=events, event=event, panel=panel, leaderboard=leaderboard)
             #
             # Show relevant filled template based on event and panel
             #
         else:
-            return render_template("AllEvents.html")
+            return render_template("AllEvents.html", allEvents=events)
 
 
 @app.errorhandler(404)
