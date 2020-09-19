@@ -1,5 +1,5 @@
-var time = 0;
-var timeStr = "0.00";
+var time;
+var timeStr;
 
 var loop;
 
@@ -8,6 +8,8 @@ var usingTimer = false;
 function useTimer() {
 	usingTimer = !usingTimer;
 	if (usingTimer) {
+		time = 0;
+		timeStr = "0.00";
 		document.getElementById("engage").value = "Stop";
 		loop = setInterval(
 			function() {
@@ -24,5 +26,6 @@ function useTimer() {
 	} else {
 		document.getElementById("engage").value = "Start";
 		clearInterval(loop);
+		document.getElementById("timeInput").value = timeStr;
 	}
 }
