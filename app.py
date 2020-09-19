@@ -3,6 +3,8 @@ import os
 import psycopg2
 import datetime
 
+from scrambler import Scrambler
+
 DATABASE_URL = os.environ["DATABASE_URL"]
 
 app = Flask(__name__)
@@ -100,6 +102,9 @@ def event():
                     times=times)
 
             else:
+                s = Scrambler()
+                scramble = s.create_scramble()
+
                 try:
                     i = data["input"]
                 except:
@@ -110,6 +115,7 @@ def event():
                     event=event,
                     panel=panel,
                     leaderboard=leaderboard,
+                    scramble=scramble,
                     inp=i)
 
         else:
