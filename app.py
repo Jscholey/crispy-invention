@@ -1,17 +1,12 @@
 from flask import Flask, render_template, request, abort, redirect
 import os
 import psycopg2
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, DecimalField
-from wtforms.validators import DataRequired, NumberRange
 import datetime
 
 DATABASE_URL = os.environ["DATABASE_URL"]
-SECRET_KEY = os.environ["SECRET_KEY"]
 
 app = Flask(__name__)
 
-app.config["SECRET_KEY"] = SECRET_KEY
 
 @app.route("/", methods=["GET"])
 def main():
@@ -21,15 +16,6 @@ def main():
 def page():
     return render_template("index.html")
 
-
-"""
-@app.route("/event/<eventName>")
-def event(eventName):
-    if eventName in ["one", "two", "three", "four", "five", "six", "seven", "pyraminx", "megaminx", "square1", "bld"]:
-        return render_template("AllEvents.html", event=eventName)
-    else:
-        abort(404)
-"""
 
 def get_display_name(event):
     names = {"three": "3x3",
@@ -46,13 +32,6 @@ def get_display_name(event):
     except:
         out = event
     return out
-
-
-class TimeSubmitForm(FlaskForm):
-    name = StringField("Name: ")#, validators=[DataRequired()])
-    time = DecimalField("Time: ")#, validators=[DataRequired(), NumberRange(min=0)], places=3)
-    submit = SubmitField("Submit")
-
 
 #
 # Good luck with this shit
@@ -158,26 +137,17 @@ def event():
                 conn = psycopg2.connect(DATABASE_URL, sslmode="require")
                 try:
                     cur = conn.cursor()
-                    print("here")
                     cur.execute("""
                         Select * from events where "eventName"=%s
                         """,
                         [event])
-                    print("here too")
                     eventId = cur.fetchone()[0]
                     # if event isn't valid, abort
-                    print("here 3")
-                    print(eventId)
-                    print(name)
-                    print(time)
-                    print(datetime.datetime.now())
                     cur.execute("""
                         Insert into times ("EventId", username, time, "dateTime") values
                         (%s, %s, %s, %s);
                         """, [eventId, name, time, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
-                    print("here4")
                     conn.commit()
-                    print("here5")
                 except:
                     conn.close()
                     abort(404)
