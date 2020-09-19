@@ -98,13 +98,13 @@ def event():
                     abort(404)
                 conn.close()
 
-                return render_template("eventTemplate.html", allEvents=events, event=event, panel=panel, leaderboard=leaderboard)
+                times.sort(key=lambda x: x[3])
+
+                return render_template("leaderboard.html", allEvents=events, event=event, panel=panel, leaderboard=leaderboard, times=times)
 
             else:
-                return render_template("eventTemplate.html", allEvents=events, event=event, panel=panel, leaderboard=leaderboard)
-            #
-            # Show relevant filled template based on event and panel
-            #
+                return render_template("timer.html", allEvents=events, event=event, panel=panel, leaderboard=leaderboard)
+
         else:
             return render_template("AllEvents.html", allEvents=events)
 
