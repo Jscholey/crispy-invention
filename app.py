@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, abort, redirect
 import os
 import psycopg2
-'''
-DATABASE_URL = os.environ["DATABASE_URL"]
 
+
+DATABASE_URL = os.environ["DATABASE_URL"]
 conn = psycopg2.connect(DATABASE_URL, sslmode="require")
-'''
+
+
 app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
@@ -33,9 +34,23 @@ def event():
         data = request.args
         if "event" in data:
             event = data["event"]
+            
+            cur = conn.cursor()
+            try:
+                cur.execute("""
+                    Select * from events;
+                    """)
+                rows = cur.fetchall()
+                events = []
+                for row in rows:
+                    events.append(row[1])
+                print(events)
+            except:
+                abort(404)
+
             #
             # TODO check if event exists in database
-            if event not in ["two", "three", "four", "five", "six", "seven", "megaminx", "pyraminx", "square1"]:
+            if event not in events:
                 return redirect("/event")
             # if not, redirect to GET event without request args
             #
