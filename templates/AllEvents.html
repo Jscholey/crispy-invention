@@ -3,11 +3,22 @@
 {% block title %}Events{% endblock %}
 
 {% block content %}
-    <nav>
-    <div class="nav nav-tabs">
+    <div>
     {% for ev in allEvents %}
-        <a class="nav-link {% if ev['event'] == event %}active{% endif %}" href="/event?event={{ev['event']}}&panel=leaderboard">{{ev['display']}}</a>
+        {% if loop.index0 is divisibleby(3) %}
+        <div class="card-deck">
+        {% endif %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ev['display']}}</h5>
+                <a class="btn btn-primary" href="/event?event={{ev['event']}}&panel=leaderboard">Compete</a>
+            </div>
+        </div>
+        {% if loop.index is divisibleby(3) %}
+        </div>
+        {% elif loop.index == loop.length %}
+        </div>
+        {% endif %}
     {% endfor %}
     </div>
-    </nav>
 {% endblock %}
