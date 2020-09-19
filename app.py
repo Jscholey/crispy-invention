@@ -4,6 +4,7 @@ import psycopg2
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, DecimalField
 from wtforms.validators import DataRequired, NumberRange
+import datetime
 
 DATABASE_URL = os.environ["DATABASE_URL"]
 SECRET_KEY = os.environ["SECRET_KEY"]
@@ -53,6 +54,9 @@ class TimeSubmitForm(FlaskForm):
     submit = SubmitField("Submit")
 
 
+#
+# Good luck with this shit
+#
 @app.route("/event", methods=["GET", "POST"])
 def event():
     if request.method == "GET":
@@ -106,6 +110,7 @@ def event():
                         [e[0]])
                     times = cur.fetchall()
                 except:
+                    conn.close()
                     abort(404)
                 conn.close()
 
@@ -144,14 +149,41 @@ def event():
             valid = True
             try:
                 name = request.form['name']
-                time = request.form['time']
+                time = float(request.form['time'])
             except:
                 valid = False
 
 
-
             if valid:
-                print("congrats, your time is stored")
+                conn = psycopg2.connect(DATABASE_URL, sslmode="require")
+                try:
+                    cur = conn.cursor()
+                    print("here")
+                    cur.execute("""
+                        Select * from events where "eventName"=%s
+                        """,
+                        [event])
+                    print("here too")
+                    eventId = cur.fetchone()[0]
+                    # if event isn't valid, abort
+                    print("here 3")
+                    print(eventId)
+                    print(name)
+                    print(time)
+                    print(datetime.datetime.now())
+                    cur.execute("""
+                        Insert into times ("EventId", username, time, "dateTime") values
+                        (%s, %s, %s, %s);
+                        """, [eventId, name, time, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
+                    print("here4")
+                    conn.commit()
+                    print("here5")
+                except:
+                    conn.close()
+                    abort(404)
+                conn.close()
+
+                # TODO let the user know their time has actually been stored
 
             url = "/event?event=%s&panel=timer" % event
             return redirect(url)
