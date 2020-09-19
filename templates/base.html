@@ -6,11 +6,32 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.css') }}">
     {% block head %}{% endblock %}
+    <style>
+        .body {
+            margin: 0;
+            padding: 0;
+        }
+        .content {
+            min-height: calc(100vh - 60px);
+            margin: 0;
+            padding: 0;
+        }
+        #main {
+            margin: 0;
+            padding-bottom: 30px;
+        }
+        .footer {
+            height: 60px;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
 <body>
+<div class="content">
 <div class="container">
 
-    <h1 style="margin-top: 35px">Cube Competition</h1>
+    <h1 style="padding-top: 35px">Cube Competition</h1>
     <ul class="nav">
         <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="/event">Events</a></li>
@@ -18,16 +39,18 @@
     </ul>
 
 
-    <div id="content">
+    <div id="main">
         <h2>{{ self.title() }}</h2>
         {% block content %}{% endblock %}
     </div>
 
 
-    <div id="footer">
-        <p>Footer text and stuff on every page</p>
-    </div>
 
 </div>
+</div>
+<footer class="footer container-fluid bg-dark" role="contentinfo">
+    <div class="container">
+    </div>
+</footer>
 </body>
 </html>
