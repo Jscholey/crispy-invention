@@ -17,12 +17,39 @@ def page():
     return render_template("index.html")
 
 
+"""
 @app.route("/event/<eventName>")
 def event(eventName):
     if eventName in ["one", "two", "three", "four", "five", "six", "seven", "pyraminx", "megaminx", "square1", "bld"]:
-        return render_template("event.html", event=eventName)
+        return render_template("AllEvents.html", event=eventName)
     else:
         abort(404)
+"""
+
+
+@app.route("/event", methods=["GET", "POST"])
+def event():
+    if request.method == "GET":
+        data = request.args
+        if "event" in data:
+            event = data["event"]
+            #
+            # TODO check if event exists in database
+            if event not in ["two", "three", "four", "five", "six", "seven", "megaminx", "pyraminx", "square1"]:
+                return redirect("/event")
+            # if not, redirect to GET event without request args
+            #
+            
+            panel = "leaderboard"
+            if "panel" in data:
+                if data["panel"] in ["leaderboard", "timer"]:
+                    panel = data["panel"]
+
+            #
+            # Show relevant filled template based on event and panel
+            #
+        else:
+            return render_template("AllEvents.html")
 
 
 @app.errorhandler(404)
