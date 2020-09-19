@@ -5,9 +5,13 @@
 {% block head %}{% endblock %}
 
 {% block content %}
-    <div>
+    <div class="card">
+        <img src="{{ url_for('static', filename='images/cross.png') }}" class="card-img-top" style="padding: 120px;">
+        <div class="card-body">
+            <h4 class="card-title">The Church of Cubers</h4>
+            <a href="/event" class="btn btn-primary">Join Us</a>
+        </div>
 
-        <p>so you can imagine some content here, and its different for every page</p>
 
     </div>
 {% endblock %}
