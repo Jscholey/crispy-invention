@@ -6,7 +6,7 @@
     <nav>
     <div class="nav nav-tabs">
     {% for ev in allEvents %}
-        <a class="nav-link {% if ev['event'] == event %}active{% endif %}" href="/event?event={{ev['event']}}">{{ev['display']}}</a>
+        <a class="nav-link {% if ev['event'] == event %}active{% endif %}" href="/event?event={{ev['event']}}&panel=leaderboard">{{ev['display']}}</a>
     {% endfor %}
     </div>
     </nav>
