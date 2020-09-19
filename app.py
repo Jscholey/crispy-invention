@@ -44,7 +44,6 @@ def event():
                 events = []
                 for row in rows:
                     events.append(row[1])
-                print(events)
             except:
                 abort(404)
 
@@ -61,7 +60,7 @@ def event():
                 panel = "timer"
                 leaderboard = False
 
-            return render_template("eventTemplate.html", event=event, panel=panel, leaderboard=leaderboard)
+            return render_template("eventTemplate.html", event=events, panel=panel, leaderboard=leaderboard)
             #
             # Show relevant filled template based on event and panel
             #
