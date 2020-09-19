@@ -51,18 +51,18 @@ def event():
     if request.method == "GET":
 
         cur = conn.cursor()
-            try:
-                cur.execute("""
-                    Select * from events;
-                    """)
-                rows = cur.fetchall()
-                events = []
-                for row in rows:
-                    out = {"event": row[1],
-                           "display": get_display_name(row[1])}
-                    events.append(out)
-            except:
-                abort(404)
+        try:
+            cur.execute("""
+                Select * from events;
+                """)
+            rows = cur.fetchall()
+            events = []
+            for row in rows:
+                out = {"event": row[1],
+                       "display": get_display_name(row[1])}
+                events.append(out)
+        except:
+            abort(404)
         test = events
 
         events = ["three", "four"]
