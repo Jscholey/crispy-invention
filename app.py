@@ -61,6 +61,8 @@ def event():
                     events.append(out)
             except:
                 abort(404)
+        test = events
+        events = ["three", "four"]
 
         data = request.args
         if "event" in data:
@@ -77,7 +79,7 @@ def event():
                 panel = "timer"
                 leaderboard = False
 
-            return render_template("eventTemplate.html", allEvents=events, event=event, panel=panel, leaderboard=leaderboard)
+            return render_template("eventTemplate.html", allEvents=events, event=test, panel=panel, leaderboard=leaderboard)
             #
             # Show relevant filled template based on event and panel
             #
