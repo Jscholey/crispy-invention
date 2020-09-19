@@ -3,9 +3,11 @@
 {% block title %}Events{% endblock %}
 
 {% block content %}
-    <div class="row">
+    <nav>
+    <div class="nav nav-tabs">
     {% for ev in allEvents %}
-        <div class="col"><a href="/event?event={{ev['event']}}">{{ev['display']}}</a></div>
+        <a class="nav-link {% if ev['event'] == event %}active{% endif %}" href="/event?event={{ev['event']}}">{{ev['display']}}</a>
     {% endfor %}
     </div>
+    </nav>
 {% endblock %}
