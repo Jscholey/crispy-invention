@@ -66,7 +66,7 @@ def event():
             
             panel = "leaderboard"
             leaderboard = True
-            if "panel" in data and data["panel"]=="timer":
+            if data["panel"]=="timer":
                 panel = "timer"
                 leaderboard = False
 
@@ -100,13 +100,17 @@ def event():
                     times=times)
 
             else:
-
+                try:
+                    i = data["input"]
+                except:
+                    i = ""
                 return render_template("timer.html",
                     title=get_display_name(event),
                     allEvents=events,
                     event=event,
                     panel=panel,
-                    leaderboard=leaderboard)
+                    leaderboard=leaderboard,
+                    inp=i)
 
         else:
 
@@ -128,6 +132,9 @@ def event():
             except:
                 valid = False
 
+            t = str(time)
+            if time <= 0 or "." not in t or int(t.split(".")[1][0]) > 5:
+                valid = False
 
             if valid:
                 conn = psycopg2.connect(DATABASE_URL, sslmode="require")
@@ -149,9 +156,12 @@ def event():
                     abort(404)
                 conn.close()
 
+                url = "/event?event=%s&panel=timer&input=good" % event
+                return redirect(url)
+
                 # TODO let the user know their time has actually been stored
 
-            url = "/event?event=%s&panel=timer" % event
+            url = "/event?event=%s&panel=timer&input=bad" % event
             return redirect(url)
 
 # TODO add a failed to connect to db page
