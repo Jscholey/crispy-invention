@@ -3,16 +3,20 @@
 {% block title %}{{title}}{% endblock %}
 
 {% block content %}
-    <div class="row">
+    <nav>
+    <div class="nav nav-pills">
     {% for ev in allEvents %}
-        <div class="col"><a href="/event?event={{ev['event']}}&panel={{panel}}">{{ev['display']}}</a></div>
+        <a class="nav-link {% if ev['event'] == event %}active{% endif %}" href="/event?event={{ev['event']}}&panel={{panel}}">{{ev['display']}}</a>
     {% endfor %}
     </div>
+    </nav>
 
-    <div class="row">
-        <div class="col"><a href="/event?event={{event}}&panel=leaderboard">Leaderboard</a></div>
-        <div class="col"><a href="/event?event={{event}}&panel=timer">Timer</a></div>
+    <nav>
+    <div class="nav nav-tabs">
+        <a class="nav-link {% if leaderboard %}active{% endif %}" href="/event?event={{event}}&panel=leaderboard">Leaderboard</a>
+        <a class="nav-link {% if not leaderboard %}active{% endif %}" href="/event?event={{event}}&panel=timer">Timer</a>
     </div>
+    </nav>
 
     {% block panel%}
     {% endblock %}
