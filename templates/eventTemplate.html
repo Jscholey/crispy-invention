@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{event}}{% endblock %}
+{% block title %}{{title}}{% endblock %}
 
 {% block content %}
     <div>
@@ -14,16 +14,7 @@
         <div><a href="/event?event={{event}}&panel=timer">Timer</a></div>
     </div>
 
-
-    {% if leaderboard %}
-    <ul>
-        <li>Morgan - 7.854</li>
-        <li>Human - 29034</li>
-    </ul>
-    {% else %}
-    <p>Morgans timer javascript goes here</p>
-    <form>
-    </form>
-    {% endif %}
+    {% block panel%}
+    {% endblock %}
 
 {% endblock %}

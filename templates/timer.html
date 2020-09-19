@@ -1,0 +1,17 @@
+{% extends "eventTemplate.html" %}
+
+{% block panel %}
+
+    <h3>Times</h3>
+    <p>enter your time</p>
+
+    <form action="/event" method="post">
+        <input type="hidden" name="event" value="{{event}}">
+        <label for="name">Name</label>
+        <input type="text" name="name">
+        <label for="time">Time</label>
+        <input type="number" step="0.001" min="0" name="time">
+        <input type="submit" value="Submit">
+    </form>
+
+{% endblock %}

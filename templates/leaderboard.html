@@ -1,0 +1,22 @@
+{% extends "eventTemplate.html" %}
+
+{% block panel %}
+
+    <h3>Leaderboard</h3>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Time</th>
+            <th>Date</th>
+        </tr>
+    {% for time in times %}
+        <tr>
+            <td>{{time[2]}}</td>
+            <td>{{time[3]}}</td>
+            <td>{{time[4]}}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}

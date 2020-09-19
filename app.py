@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, abort, redirect
 import os
 import psycopg2
-
+import datetime
 
 DATABASE_URL = os.environ["DATABASE_URL"]
 
 app = Flask(__name__)
+
 
 @app.route("/", methods=["GET"])
 def main():
@@ -15,15 +16,6 @@ def main():
 def page():
     return render_template("index.html")
 
-
-"""
-@app.route("/event/<eventName>")
-def event(eventName):
-    if eventName in ["one", "two", "three", "four", "five", "six", "seven", "pyraminx", "megaminx", "square1", "bld"]:
-        return render_template("AllEvents.html", event=eventName)
-    else:
-        abort(404)
-"""
 
 def get_display_name(event):
     names = {"three": "3x3",
@@ -41,7 +33,9 @@ def get_display_name(event):
         out = event
     return out
 
-
+#
+# Good luck with this shit
+#
 @app.route("/event", methods=["GET", "POST"])
 def event():
     if request.method == "GET":
@@ -95,19 +89,76 @@ def event():
                         [e[0]])
                     times = cur.fetchall()
                 except:
+                    conn.close()
                     abort(404)
                 conn.close()
 
-                return render_template("eventTemplate.html", allEvents=events, event=event, panel=panel, leaderboard=leaderboard)
+                times.sort(key=lambda x: x[3])
+
+                return render_template("leaderboard.html",
+                    title=get_display_name(event),
+                    allEvents=events,
+                    event=event,
+                    panel=panel,
+                    leaderboard=leaderboard,
+                    times=times)
 
             else:
-                return render_template("eventTemplate.html", allEvents=events, event=event, panel=panel, leaderboard=leaderboard)
-            #
-            # Show relevant filled template based on event and panel
-            #
+
+                return render_template("timer.html",
+                    title=get_display_name(event),
+                    allEvents=events,
+                    event=event,
+                    panel=panel,
+                    leaderboard=leaderboard)
+
         else:
+
             return render_template("AllEvents.html", allEvents=events)
 
+
+    elif request.method == "POST":
+
+            try:
+                event = request.form['event']
+            except:
+                return redirect("/event")
+
+            # Form handling logic
+            valid = True
+            try:
+                name = request.form['name']
+                time = float(request.form['time'])
+            except:
+                valid = False
+
+
+            if valid:
+                conn = psycopg2.connect(DATABASE_URL, sslmode="require")
+                try:
+                    cur = conn.cursor()
+                    cur.execute("""
+                        Select * from events where "eventName"=%s
+                        """,
+                        [event])
+                    eventId = cur.fetchone()[0]
+                    # if event isn't valid, abort
+                    cur.execute("""
+                        Insert into times ("EventId", username, time, "dateTime") values
+                        (%s, %s, %s, %s);
+                        """, [eventId, name, time, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
+                    conn.commit()
+                except:
+                    conn.close()
+                    abort(404)
+                conn.close()
+
+                # TODO let the user know their time has actually been stored
+
+            url = "/event?event=%s&panel=timer" % event
+            return redirect(url)
+
+# TODO add a failed to connect to db page
 
 @app.errorhandler(404)
 def page_not_found(e):
