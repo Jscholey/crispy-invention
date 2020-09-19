@@ -2,11 +2,23 @@
 
 {% block title %}{{event}}{% endblock %}
 
+{% block head %}<script src="{{ url_for('static', filename='event.js') }}"></script>{% endblock %}
+
 {% block content %}
     <div>
 
         <p>how good are you at {{event}}</p>
         <p>Lets find out!</p>
+        <p>Scrambles:</p>
+        <ul>
+        	<li>TODO:</li>
+        	<li>REPLACE</li>
+        	<li>WITH</li>
+        	<li>TEMPLATE</li>
+        	<li>THINGY</li>
+    	</ul>
+    	<p id="time">0.00</p>
+    	<!-- buttons and spacebar detection and stuff? -->
 
     </div>
 {% endblock %}
