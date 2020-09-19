@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, abort
+from flask import Flask, render_template, request, abort, redirect
 import os
 import psycopg2
 '''
@@ -41,10 +41,12 @@ def event():
             #
             
             panel = "leaderboard"
-            if "panel" in data:
-                if data["panel"] in ["leaderboard", "timer"]:
-                    panel = data["panel"]
+            leaderboard = True
+            if "panel" in data and data["panel"]=="timer":
+                panel = "timer"
+                leaderboard = False
 
+            return render_template("eventTemplate.html", event=event, panel=panel, leaderboard=leaderboard)
             #
             # Show relevant filled template based on event and panel
             #

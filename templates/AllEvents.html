@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{event}}{% endblock %}
-
-{% block head %}Events{% endblock %}
+{% block title %}Events{% endblock %}
 
 {% block content %}
     <div>
@@ -10,5 +8,6 @@
         <div><a href=/event?event=four>4x4</a></div>
         <div><a href=/event?event=five>5x5</a></div>
         <div><a href=/event?event=six>6x6</a></div>
+        <!-- maybe have this dynamically created from db -->
     </div>
 {% endblock %}

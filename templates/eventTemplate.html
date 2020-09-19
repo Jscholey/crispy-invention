@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{event}}{% endblock %}
+
+{% block content %}
+    <div>
+        <div><a href="/event?event=three&panel={{panel}}">3x3</a></div>
+        <div><a href="/event?event=four&panel={{panel}}">4x4</a></div>
+        <div><a href="/event?event=five&panel={{panel}}">5x5</a></div>
+        <div><a href="/event?event=six&panel={{panel}}">6x6</a></div>
+        <!-- maybe have this dynamically created from db -->
+    </div>
+
+    <div>
+        <div><a href="/event?event={{event}}&panel=leaderboard">Leaderboard</a></div>
+        <div><a href="/event?event={{event}}&panel=timer">Timer</a></div>
+    </div>
+
+
+    {% if leaderboard %}
+    <ul>
+        <li>Morgan - 7.854</li>
+        <li>Human - 29034</li>
+    </ul>
+    {% else %}
+    <p>Morgans timer javascript goes here</p>
+    <form>
+    </form>
+    {% endif %}
+
+{% endblock %}
