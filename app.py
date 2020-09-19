@@ -16,7 +16,7 @@ def main():
 
 @app.route("/about", methods=["GET"])
 def about():
-    return render_template("about.html")
+    return render_template("about.html", title="About")
 
 
 def get_display_name(event):
