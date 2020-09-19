@@ -1,18 +1,20 @@
 {% extends "eventTemplate.html" %}
 
 {% block panel %}
-<h3>This wil have the leaderboard</h3>
-<p>fasduifhasduiofhasdiofuhasdiofhaweioursetgverijhnmkmjkvnmcskon vjhcb rgefbv4wecnvbcthnvug rrsznxru zdghserui dlghzdrlgzdfuigh zdfjghxdrui hgzdfuig dfjkg dfjgh zdfjkgh dfzjg zdfjkgh zdkjlg zdfjk xdfljkgh z</p>
+
+    <h3>Leaderboard</h3>
 
     <table>
         <tr>
             <th>Name</th>
             <th>Time</th>
+            <th>Date</th>
         </tr>
     {% for time in times %}
         <tr>
             <td>{{time[2]}}</td>
             <td>{{time[3]}}</td>
+            <td>{{time[4]}}</td>
         </tr>
     {% endfor %}
     </table>

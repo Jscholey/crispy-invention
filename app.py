@@ -1,11 +1,16 @@
 from flask import Flask, render_template, request, abort, redirect
 import os
 import psycopg2
-
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, DecimalField
+from wtforms.validators import DataRequired, NumberRange
 
 DATABASE_URL = os.environ["DATABASE_URL"]
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 app = Flask(__name__)
+
+app.config["SECRET_KEY"] = SECRET_KEY
 
 @app.route("/", methods=["GET"])
 def main():
@@ -40,6 +45,12 @@ def get_display_name(event):
     except:
         out = event
     return out
+
+
+class TimeSubmitForm(FlaskForm):
+    name = StringField("Name: ")#, validators=[DataRequired()])
+    time = DecimalField("Time: ")#, validators=[DataRequired(), NumberRange(min=0)], places=3)
+    submit = SubmitField("Submit")
 
 
 @app.route("/event", methods=["GET", "POST"])
@@ -100,13 +111,50 @@ def event():
 
                 times.sort(key=lambda x: x[3])
 
-                return render_template("leaderboard.html", allEvents=events, event=event, panel=panel, leaderboard=leaderboard, times=times)
+                return render_template("leaderboard.html",
+                    title=get_display_name(event),
+                    allEvents=events,
+                    event=event,
+                    panel=panel,
+                    leaderboard=leaderboard,
+                    times=times)
 
             else:
-                return render_template("timer.html", allEvents=events, event=event, panel=panel, leaderboard=leaderboard)
+
+                return render_template("timer.html",
+                    title=get_display_name(event),
+                    allEvents=events,
+                    event=event,
+                    panel=panel,
+                    leaderboard=leaderboard)
 
         else:
+
             return render_template("AllEvents.html", allEvents=events)
+
+
+    elif request.method == "POST":
+
+            try:
+                event = request.form['event']
+            except:
+                return redirect("/event")
+
+            # Form handling logic
+            valid = True
+            try:
+                name = request.form['name']
+                time = request.form['time']
+            except:
+                valid = False
+
+
+
+            if valid:
+                print("congrats, your time is stored")
+
+            url = "/event?event=%s&panel=timer" % event
+            return redirect(url)
 
 
 @app.errorhandler(404)
