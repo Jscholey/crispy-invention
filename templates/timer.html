@@ -6,12 +6,16 @@
     <p>enter your time</p>
 
     <form action="/event" method="post">
-        <input type="hidden" name="event" value="{{event}}">
-        <label for="name">Name</label>
-        <input type="text" name="name">
-        <label for="time">Time</label>
-        <input type="number" step="0.001" min="0" name="time">
-        <input type="submit" value="Submit">
+            <input type="hidden" name="event" value="{{event}}">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control" type="text" name="name">
+        </div>
+        <div class="form-group">
+            <label for="time">Time</label>
+            <input class="form-control" type="number" step="0.001" min="0" name="time">
+        </div>
+        <input class="btn btn-primary" type="submit" value="Submit">
     </form>
     {% if inp == "good" %}
     <div class="alert alert-success" role="alert">Time added</div>
